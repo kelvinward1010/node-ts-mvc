@@ -1,7 +1,18 @@
 import express from "express";
+import * as dotenv from "dotenv";
+import cors from 'cors';
+import { connectDatabase } from "./config/database";
+import { routes } from "./routes";
 
+const port = process.env.PORT || 3000;
 const app = express();
-const port = 3000;
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Middleware xử lý dữ liệu form-urlencoded
+dotenv.config();
+connectDatabase();
+routes(app);
+
 
 app.get("/", (req, res) => {
     res.send("Hello, TypeScript with Express!");
