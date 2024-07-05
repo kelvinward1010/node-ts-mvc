@@ -1,8 +1,9 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import cors from 'cors';
+import cors from "cors";
 import { connectDatabase } from "./config/database";
 import { routes } from "./routes";
+import swaggerDocument from './config/swagger';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true })); // Middleware xử lý dữ li�
 dotenv.config();
 connectDatabase();
 routes(app);
-
+swaggerDocument(app, Number(port));
 
 app.get("/", (req, res) => {
     res.send("Hello, TypeScript with Express!");

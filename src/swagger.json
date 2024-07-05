@@ -1,0 +1,82 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "REST API for Swagger Documentation",
+        "version": "1.0.0",
+        "description": "API for user registration and authentication"
+    },
+    "schemes": [
+        "http"
+    ],
+    "servers": [
+        {
+            "url": "http://localhost:3000/"
+        }
+    ],
+    "paths": {
+        "/api/auth/sign-up": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "description": "Register a new user by sending user details.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegistration"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Người dùng đã đăng ký thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserRegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Yêu cầu không hợp lệ"
+                    },
+                    "500": {
+                        "description": "Lỗi máy chủ nội bộ"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserRegistrationResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
