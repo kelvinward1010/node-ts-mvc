@@ -1,5 +1,6 @@
 import * as express from "express";
-import { register } from "../controllers/AuthController";
+import { detailUser, login, logout, refreshToken, register } from "../controllers/authController";
+import { authenticateToken } from "../middleware/authMiddleware";
 
 export const routerAuth = express.Router();
 
@@ -31,3 +32,7 @@ export const routerAuth = express.Router();
 */
 
 routerAuth.post("/sign-up", register);
+routerAuth.post("/sign-in", login);
+routerAuth.post("/refresh-token", refreshToken);
+routerAuth.post("/sign-out", logout);
+routerAuth.get("/get-user-detail/:id", authenticateToken, detailUser);

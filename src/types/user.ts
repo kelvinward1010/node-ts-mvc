@@ -6,4 +6,11 @@ export interface IUser{
 
 export interface IUserModel extends IUser{
     _id: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IUserLogin {
+    email: string;
+    password: string;
 }

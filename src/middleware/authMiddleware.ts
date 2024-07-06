@@ -1,20 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const secretKey = process.env.JWT_SECRET || "SHYDHYUE76R843uyteru76UYyyuy7yuy765GHHiuyhg"; // Thay bằng secret key thực tế
 
-export const authenticateToken = (
+export const authenticateToken = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    
+    const secretKey: any = process.env.JWT_ACCESSTOKEN;
+    const token = await req.headers.authorization?.split(" ")[1];
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    jwt.verify(token, secretKey, (err, decoded) => {
+    jwt.verify(token, secretKey, (err: any, decoded: any) => {
         if (err) {
             return res.status(403).json({ message: "Invalid token" });
         }

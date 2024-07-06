@@ -1,22 +1,129 @@
 import { Request, Response } from "express";
 import { IUser } from "../types/user";
 import { checkValidate } from "../utils/regex";
-import { createUser } from "../services/authService";
+import { createUser, getDetailUser, loginUser } from "../services/authService";
+import { refreshTokenJwtService } from "../services/tokenService";
 
 
 const register = async (req: Request, res: Response) => {
     try {
         const { name, email, password }: IUser = req.body;
-        if(!name || !email || !password) return res.status(400).json("All fields are required!");
-        if(!checkValidate(email)) return res.status(400).json("Email not matched!");
-        
+        if (!name || !email || !password) return res.status(400).json("All fields are required!");
+        if (!checkValidate(email)) return res.status(400).json("Email not matched!");
+
         const newUser = await createUser({ name, email, password });
         return res.status(200).json(newUser);
-    } catch (error: any) {
-        res.status(500).json("Error on server: " + error.message)
+    } 
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
     }
 }
 
-export { 
+const login = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'Hãy nhập đầy đủ thông tin!'
+            });
+        }
+
+        const response: any = await loginUser(req.body);
+        const { refresh_token } = response;
+
+        res.cookie('refresh_token', refresh_token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            path: '/'
+        });
+
+        return res.status(200).json({
+            data: response
+        });
+    } 
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
+    }
+};
+
+const refreshToken = async (req: Request, res: Response) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1];
+
+        if (!token) {
+            return res.status(401).json({
+                status: 401,
+                message: 'Missing authorization token'
+            });
+        }
+
+        const response = await refreshTokenJwtService(token);
+        return res.status(200).json(response);
+    }
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
+    }
+};
+
+const logout = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie('refresh_token');
+        return res.status(200).json({
+            status: 200,
+            message: 'Logout successfully!'
+        });
+    } 
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
+    }
+};
+
+const detailUser = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        if (!userId) {
+            return res.status(401).json({
+                status: 401,
+                message: 'Missing user ID'
+            });
+        }
+        
+        const response = await getDetailUser(userId);
+        return res.status(200).json(response);
+    } 
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
+    }
+};
+
+
+export {
     register,
+    login,
+    refreshToken,
+    logout,
+    detailUser,
 }
