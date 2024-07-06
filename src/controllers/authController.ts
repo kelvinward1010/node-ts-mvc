@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { IUser } from "../types/user";
+import { IUser, IUserUpdate } from "../types/user";
 import { checkValidate } from "../utils/regex";
-import { createUser, getDetailUser, loginUser } from "../services/authService";
+import { createUser, getDetailUser, loginUser, updateUser } from "../services/authService";
 import { refreshTokenJwtService } from "../services/tokenService";
 
 
@@ -13,7 +13,7 @@ const register = async (req: Request, res: Response) => {
 
         const newUser = await createUser({ name, email, password });
         return res.status(200).json(newUser);
-    } 
+    }
     catch (error: any) {
         return res.status(500).json({
             status: 500,
@@ -26,7 +26,7 @@ const register = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-
+        
         if (!email || !password) {
             return res.status(200).json({
                 status: 'ERR',
@@ -47,7 +47,7 @@ const login = async (req: Request, res: Response) => {
         return res.status(200).json({
             data: response
         });
-    } 
+    }
     catch (error: any) {
         return res.status(500).json({
             status: 500,
@@ -87,7 +87,7 @@ const logout = async (req: Request, res: Response) => {
             status: 200,
             message: 'Logout successfully!'
         });
-    } 
+    }
     catch (error: any) {
         return res.status(500).json({
             status: 500,
@@ -97,19 +97,19 @@ const logout = async (req: Request, res: Response) => {
     }
 };
 
-const detailUser = async (req: Request, res: Response) => {
+const detail = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
         if (!userId) {
             return res.status(401).json({
                 status: 401,
-                message: 'Missing user ID'
+                message: 'Missing user ID!'
             });
         }
-        
+
         const response = await getDetailUser(userId);
         return res.status(200).json(response);
-    } 
+    }
     catch (error: any) {
         return res.status(500).json({
             status: 500,
@@ -118,6 +118,36 @@ const detailUser = async (req: Request, res: Response) => {
         });
     }
 };
+
+const update = async (req: Request, res: Response) => {
+    try {
+        const userId: string = req.params.id;
+        const data: IUserUpdate = req.body;
+        
+        if (!userId) {
+            return res.status(401).json({
+                status: 401,
+                message: 'Missing user ID!'
+            })
+        }
+        if(!data.name){
+            return res.status(400).json({
+                status: 400,
+                message: 'Bad request!'
+            })
+        }
+
+        const response = await updateUser(userId, data);
+        return res.status(200).json(response);
+    }
+    catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: 'Internal server error',
+            error: error?.message
+        });
+    }
+}
 
 
 export {
@@ -125,5 +155,6 @@ export {
     login,
     refreshToken,
     logout,
-    detailUser,
+    detail,
+    update,
 }

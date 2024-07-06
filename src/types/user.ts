@@ -14,3 +14,8 @@ export interface IUserLogin {
     email: string;
     password: string;
 }
+
+export interface IUserUpdate{
+    name?: string;
+    image?: string;
+}

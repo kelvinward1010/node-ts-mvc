@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { userModel } from "../models/UserModel";
-import { IUser, IUserLogin } from "../types/user";
+import { IUser, IUserLogin, IUserUpdate } from "../types/user";
 import { createToken, generalAccessToken, generalRefreshToken } from './tokenService';
 
 
@@ -102,9 +102,37 @@ const getDetailUser = async (id: string) => {
     })
 }
 
+const updateUser = (id: string, data: IUserUpdate) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkUser = await userModel.findOne({
+                _id: id
+            })
+            if (checkUser === null) {
+                resolve({
+                    status: 404,
+                    message: "This account doesn't exist!"
+                })
+            }
+
+            const updateUser = await userModel.findByIdAndUpdate(id, {$set: data}, { new: true })
+            
+            resolve({
+                status: 200,
+                message: 'Updated user successfully!',
+                data: updateUser
+            })
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 
 export {
     createUser,
     loginUser,
     getDetailUser,
+    updateUser,
 }
