@@ -11,7 +11,7 @@ const createUser = (newUser: IUser) => {
             let checkUser = await userModel.findOne({ email });
             if (checkUser) {
                 resolve({
-                    status: 200,
+                    status: 409,
                     message: 'User had been created along time ago!'
                 })
             }

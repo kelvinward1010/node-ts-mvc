@@ -28,9 +28,9 @@ const login = async (req: Request, res: Response) => {
         const { email, password } = req.body;
         
         if (!email || !password) {
-            return res.status(200).json({
-                status: 'ERR',
-                message: 'Hãy nhập đầy đủ thông tin!'
+            return res.status(400).json({
+                status: 400,
+                message: 'Please enter complete information!'
             });
         }
 
@@ -101,8 +101,8 @@ const detail = async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
         if (!userId) {
-            return res.status(401).json({
-                status: 401,
+            return res.status(400).json({
+                status: 400,
                 message: 'Missing user ID!'
             });
         }
@@ -122,22 +122,22 @@ const detail = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
     try {
         const userId: string = req.params.id;
-        const data: IUserUpdate = req.body;
+        const {name, image}: IUserUpdate = req.body;
         
         if (!userId) {
-            return res.status(401).json({
-                status: 401,
+            return res.status(400).json({
+                status: 400,
                 message: 'Missing user ID!'
             })
         }
-        if(!data.name){
+        if(!name){
             return res.status(400).json({
                 status: 400,
                 message: 'Bad request!'
             })
         }
 
-        const response = await updateUser(userId, data);
+        const response = await updateUser(userId, {name, image});
         return res.status(200).json(response);
     }
     catch (error: any) {

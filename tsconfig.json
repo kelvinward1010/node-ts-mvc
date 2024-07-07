@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+      "target": "ES6",
+      "module": "CommonJS",
+      "outDir": "./dist", // Thư mục đầu ra sau khi biên dịch
+      "rootDir": "./src", // Thư mục chứa mã nguồn TypeScript
+      "esModuleInterop": true,
+      "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+
