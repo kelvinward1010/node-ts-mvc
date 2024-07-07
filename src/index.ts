@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Middleware xử lý dữ liệu form-urlencoded
 dotenv.config();
+connectDatabase();
+swaggerDocument(app, Number(port));
 routes(app);
 
 app.get("/", (req, res) => {
@@ -18,7 +20,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-    connectDatabase();
-    swaggerDocument(app, Number(port));
     console.log(`Server is running at http://localhost:${port}`);
 });
