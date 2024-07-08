@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import { detail, login, logout, refreshToken, register, update } from "../controllers/authController";
 import { authenticateToken } from "../middleware/authMiddleware";
 

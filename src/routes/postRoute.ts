@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import { authenticateToken } from "../middleware/authMiddleware";
 import { createPostFN, getNewestPostsFN, getPostFN, searchPostsFN, updatePostFN } from "../controllers/postController";
 

@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { userModel } from "../models/UserModel";
 import { IUser, IUserLogin, IUserUpdate } from "../types/user";
 import { createToken, generalAccessToken, generalRefreshToken } from './tokenService';
