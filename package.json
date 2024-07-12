@@ -4,7 +4,9 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "npx nodemon ts-node --esm --transpile-only index.ts",
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "format": "prettier --write \"**/*.{ts,tsx,css,scss,json}\"",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +29,14 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/swagger-jsdoc": "^6.0.4",
-    "@types/swagger-ui-express": "^4.1.6"
+    "@types/swagger-ui-express": "^4.1.6",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,css,json,scss,css}": [
+      "prettier --write"
+    ]
   }
 }
