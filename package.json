@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "npx nodemon ts-node --esm --transpile-only index.ts",
+    "dev": "npx nodemon ts-node --esm --transpile-only src/index.ts",
     "start": "nodemon src/index.ts",
     "format": "prettier --write \"**/*.{ts,tsx,css,scss,json}\"",
     "prepare": "husky"
