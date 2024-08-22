@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDatabase } from "./config/database";
 import { routes } from "./routes";
+import ServerlessHttp from "serverless-http";
 // import swaggerDocument from './config/swagger';
 
 dotenv.config();
@@ -24,3 +25,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+
+module.exports.handler = ServerlessHttp(app);
