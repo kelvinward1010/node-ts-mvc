@@ -10,7 +10,7 @@ const createProduct = (postInfo: IProduct) => {
             if (newPost) {
                 resolve({
                     status: 200,
-                    message: "Created post successfully!",
+                    message: "ok",
                     data: { ...newPost._doc },
                 });
             }
@@ -20,4 +20,28 @@ const createProduct = (postInfo: IProduct) => {
     });
 };
 
-export { createProduct };
+const getProduct = (id: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkPost = await productModel.findOne({
+                _id: id,
+            });
+            if (checkPost === null) {
+                resolve({
+                    status: 404,
+                    message: "This product doesn't exist!",
+                });
+            }
+
+            resolve({
+                status: 200,
+                message: "ok",
+                data: checkPost,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+export { createProduct, getProduct };
