@@ -7,7 +7,12 @@ const productSchema = new mongoose.Schema(
         description: { type: String, required: true },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
-        star: { type: Number, required: true },
+        appreciation: [
+            {
+                star: { type: Number, required: true },
+                idUser: { type: String, required: true },
+            },
+        ],
         type: { type: String, required: true },
         authorID: { type: String, required: true },
     },
