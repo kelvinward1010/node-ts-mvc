@@ -1,5 +1,5 @@
 import { productModel } from "../models/ProductModel";
-import { IProduct } from "../types/product";
+import { IProduct, IProductUpdate } from "../types/product";
 
 const createProduct = (postInfo: IProduct) => {
     return new Promise(async (resolve, reject) => {
@@ -44,4 +44,34 @@ const getProduct = (id: string) => {
     });
 };
 
-export { createProduct, getProduct };
+const updateProduct = (id: string, data: IProductUpdate) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkPost = await productModel.findOne({
+                _id: id,
+            });
+            if (checkPost === null) {
+                resolve({
+                    status: 404,
+                    message: "This product doesn't exist!",
+                });
+            }
+
+            const updatePost = await productModel.findByIdAndUpdate(
+                id,
+                { $set: data },
+                { new: true },
+            );
+
+            resolve({
+                status: 200,
+                message: "ok",
+                data: updatePost,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+export { createProduct, getProduct, updateProduct };
