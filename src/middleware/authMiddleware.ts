@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { userModel } from "../models/UserModel";
 import jwt from "jsonwebtoken";
 
-export const authenticateToken = async (
+export const authenticateTokenAdmin = async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -29,8 +29,10 @@ export const authenticateToken = async (
                 _id: userID,
             });
 
-            req.body = { ...req.body, userID, user };
-            next();
+            if (user?.idAdmin) {
+                req.body = { ...req.body, user };
+                next();
+            }
         });
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });

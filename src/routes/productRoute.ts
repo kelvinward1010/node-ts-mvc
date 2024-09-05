@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticateToken } from "../middleware/authMiddleware";
+import { authenticateTokenAdmin } from "../middleware/authMiddleware";
 import {
     createProductFN,
     getProductFN,
@@ -9,5 +9,5 @@ import {
 export const routerProduct = express.Router();
 
 routerProduct.post("/:id", getProductFN);
-routerProduct.post("/create", authenticateToken, createProductFN);
-routerProduct.post("/update/:id", authenticateToken, updateProductFN);
+routerProduct.post("/create", authenticateTokenAdmin, createProductFN);
+routerProduct.post("/update/:id", authenticateTokenAdmin, updateProductFN);

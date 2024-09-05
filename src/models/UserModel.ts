@@ -1,12 +1,15 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-    name: {type: "string", required: true},
-    email: {type: "string", required: true, unique: true},
-    password: {type: "string", required: true},
-    image: {type: "string"},
-}, {timestamps: true})
-
+const userSchema = new mongoose.Schema(
+    {
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        idAdmin: { default: false, type: Boolean, required: true },
+        image: { type: String },
+    },
+    { timestamps: true },
+);
 
 export const userModel = mongoose.model("User", userSchema);
 
@@ -45,4 +48,4 @@ export const userModel = mongoose.model("User", userSchema);
  *      type: string
  *     updatedAt:
  *      type: string
-*/
+ */

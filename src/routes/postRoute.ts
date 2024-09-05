@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticateToken } from "../middleware/authMiddleware";
+import { authenticateTokenAdmin } from "../middleware/authMiddleware";
 import {
     createPostFN,
     getNewestPostsFN,
@@ -12,8 +12,8 @@ import {
 export const routerPost = express.Router();
 
 routerPost.get("/search", searchPostsFN);
-routerPost.post("/create", authenticateToken, createPostFN);
-routerPost.put("/update/:id", authenticateToken, updatePostFN);
-routerPost.delete("/delete/:id", authenticateToken, deletePostFN);
+routerPost.post("/create", authenticateTokenAdmin, createPostFN);
+routerPost.put("/update/:id", authenticateTokenAdmin, updatePostFN);
+routerPost.delete("/delete/:id", authenticateTokenAdmin, deletePostFN);
 routerPost.get("/post-detail/:id", getPostFN);
 routerPost.get("/posts-newest", getNewestPostsFN);

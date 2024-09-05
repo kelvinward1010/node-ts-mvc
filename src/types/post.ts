@@ -6,11 +6,7 @@ export interface IsearchPost {
 export interface IPost {
     topic: string[];
     title: string;
-    author: {
-        id: string;
-        name: string;
-        image?: string;
-    },
+    authorID: String;
     content: string;
     description: string;
     image_thumbnail: string;
@@ -19,11 +15,6 @@ export interface IPost {
 export interface IPostUpdate {
     topic?: string[];
     title?: string;
-    author?: {
-        id: string;
-        name: string;
-        image?: string;
-    },
     content?: string;
     description?: string;
     image_thumbnail?: string;

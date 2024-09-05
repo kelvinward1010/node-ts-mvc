@@ -45,7 +45,7 @@ const createPostFN = async (req: Request, res: Response) => {
         const {
             topic,
             title,
-            author,
+            authorID,
             content,
             description,
             image_thumbnail,
@@ -58,7 +58,7 @@ const createPostFN = async (req: Request, res: Response) => {
             });
         }
 
-        if (!author.id || !author.name) {
+        if (!authorID) {
             return res.status(400).json({
                 status: 400,
                 message: "Missing author information!",
@@ -68,7 +68,7 @@ const createPostFN = async (req: Request, res: Response) => {
         const newPost = await createPost({
             topic,
             title,
-            author,
+            authorID,
             content,
             description,
             image_thumbnail,
@@ -111,7 +111,6 @@ const updatePostFN = async (req: Request, res: Response) => {
         const {
             topic,
             title,
-            author,
             content,
             description,
             image_thumbnail,
@@ -133,7 +132,6 @@ const updatePostFN = async (req: Request, res: Response) => {
         const response = await updatePost(postId, {
             topic,
             title,
-            author,
             content,
             description,
             image_thumbnail,

@@ -1,6 +1,13 @@
 import express from "express";
-import { detail, login, logout, refreshToken, register, update } from "../controllers/authController";
-import { authenticateToken } from "../middleware/authMiddleware";
+import {
+    detail,
+    login,
+    logout,
+    refreshToken,
+    register,
+    update,
+} from "../controllers/authController";
+import { authenticateTokenAdmin } from "../middleware/authMiddleware";
 
 export const routerAuth = express.Router();
 
@@ -14,7 +21,7 @@ export const routerAuth = express.Router();
  *   summary: Register a user
  *   requestBody:
  *    required: true
- *    content: 
+ *    content:
  *     application/json:
  *      schema:
  *       $ref: '#/components/schemas/UserRegistration'
@@ -29,11 +36,11 @@ export const routerAuth = express.Router();
  *     description: Bad request
  *    500:
  *     description: Internal server error
-*/
+ */
 
 routerAuth.post("/sign-up", register);
 routerAuth.post("/sign-in", login);
 routerAuth.post("/refresh-token", refreshToken);
 routerAuth.post("/sign-out", logout);
-routerAuth.get("/get-user-detail/:id", authenticateToken, detail);
-routerAuth.put("/update-user/:id", authenticateToken, update);
+routerAuth.get("/get-user-detail/:id", authenticateTokenAdmin, detail);
+routerAuth.put("/update-user/:id", authenticateTokenAdmin, update);
