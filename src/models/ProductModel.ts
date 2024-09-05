@@ -9,12 +9,11 @@ const productSchema = new mongoose.Schema(
         price: { type: Number, required: true },
         appreciation: [
             {
-                star: { type: Number, required: true },
-                idUser: { type: String, required: true },
+                star: { type: Number },
+                idUser: { type: String },
             },
         ],
         type: { type: String, required: true },
-        authorID: { type: String, required: true },
     },
     { timestamps: true },
 );

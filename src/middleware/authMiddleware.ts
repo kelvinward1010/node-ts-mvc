@@ -25,13 +25,16 @@ export const authenticateTokenAdmin = async (
                 return res.status(403).json({ message: "Invalid token" });
             }
 
-            const user = await userModel.findOne({
-                _id: userID,
-            });
+            const user = await userModel.findOne({ _id: userID });
 
             if (user?.idAdmin) {
                 req.body = { ...req.body, user };
                 next();
+            } else {
+                return res.status(403).json({
+                    message: "You don't have permission to do",
+                    status: 403,
+                });
             }
         });
     } catch (error) {

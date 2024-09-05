@@ -8,6 +8,6 @@ import {
 
 export const routerProduct = express.Router();
 
-routerProduct.post("/:id", getProductFN);
+routerProduct.get("/:id", getProductFN);
 routerProduct.post("/create", authenticateTokenAdmin, createProductFN);
-routerProduct.post("/update/:id", authenticateTokenAdmin, updateProductFN);
+routerProduct.put("/update/:id", authenticateTokenAdmin, updateProductFN);

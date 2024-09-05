@@ -16,19 +16,9 @@ const createProductFN = async (req: Request, res: Response) => {
             price,
             appreciation,
             type,
-            authorID,
         }: IProduct = req.body;
 
-        if (
-            !name ||
-            !image ||
-            !description ||
-            !quantity ||
-            !price ||
-            !appreciation ||
-            !type ||
-            !authorID
-        ) {
+        if (!name || !image || !description || !quantity || !price || !type) {
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request",
@@ -43,7 +33,6 @@ const createProductFN = async (req: Request, res: Response) => {
             price,
             appreciation,
             type,
-            authorID,
         });
         return res.status(200).json(newProduct);
     } catch (error: any) {

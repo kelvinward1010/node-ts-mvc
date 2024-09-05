@@ -4,14 +4,13 @@ export interface IProduct {
     description: string;
     quantity: number;
     price: number;
-    appreciation: [
+    appreciation?: [
         {
             star: number;
             idUser: string;
         },
     ];
     type: string;
-    authorID: string;
 }
 
 export interface IProductUpdate {
