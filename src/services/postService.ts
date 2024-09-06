@@ -148,12 +148,12 @@ const deletePost = (id: string) => {
                 });
             }
 
-            const updatePost = await postModel.findByIdAndDelete(id);
+            const deletePost = await postModel.findByIdAndDelete(id);
 
             resolve({
                 status: 200,
                 message: "Ok",
-                data: updatePost,
+                data: deletePost,
             });
         } catch (e) {
             reject(e);

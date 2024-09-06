@@ -1,3 +1,8 @@
+export interface IsearchProduct {
+    name?: string;
+    type?: string;
+}
+
 export interface IProduct {
     name: string;
     image: string;
@@ -26,4 +31,9 @@ export interface IProductUpdate {
         },
     ];
     type: string;
+}
+
+export interface IProductAppreciation {
+    star: number;
+    idUser: string;
 }

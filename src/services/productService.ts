@@ -1,17 +1,52 @@
 import { productModel } from "../models/ProductModel";
 import { IProduct, IProductUpdate } from "../types/product";
 
+const searchProducts = (name?: string, type?: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let finalSearch =
+                name || type
+                    ? {
+                          $or: [
+                              { name: new RegExp(String(name)) },
+                              { type: String(type) },
+                          ],
+                      }
+                    : {};
+
+            const searchPdts = await productModel
+                .find(finalSearch)
+                .sort({ createdAt: -1 });
+
+            if (searchPdts === null) {
+                resolve({
+                    status: 404,
+                    message: "Not found any product!",
+                });
+            }
+
+            resolve({
+                status: 200,
+                message: "Successfully!",
+                data: searchPdts,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 const createProduct = (postInfo: IProduct) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const newPost: any = await productModel.create(postInfo);
-            await newPost.save();
+            const newProduct: any = await productModel.create(postInfo);
+            await newProduct.save();
 
-            if (newPost) {
+            if (newProduct) {
                 resolve({
                     status: 200,
                     message: "ok",
-                    data: { ...newPost._doc },
+                    data: { ...newProduct._doc },
                 });
             }
         } catch (error) {
@@ -23,10 +58,10 @@ const createProduct = (postInfo: IProduct) => {
 const getProduct = (id: string) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const checkPost = await productModel.findOne({
+            const checkProduct = await productModel.findOne({
                 _id: id,
             });
-            if (checkPost === null) {
+            if (checkProduct === null) {
                 resolve({
                     status: 404,
                     message: "This product doesn't exist!",
@@ -36,7 +71,7 @@ const getProduct = (id: string) => {
             resolve({
                 status: 200,
                 message: "ok",
-                data: checkPost,
+                data: checkProduct,
             });
         } catch (e) {
             reject(e);
@@ -47,17 +82,17 @@ const getProduct = (id: string) => {
 const updateProduct = (id: string, data: IProductUpdate) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const checkPost = await productModel.findOne({
+            const checkProduct = await productModel.findOne({
                 _id: id,
             });
-            if (checkPost === null) {
+            if (checkProduct === null) {
                 resolve({
                     status: 404,
                     message: "This product doesn't exist!",
                 });
             }
 
-            const updatePost = await productModel.findByIdAndUpdate(
+            const updatePdct = await productModel.findByIdAndUpdate(
                 id,
                 { $set: data },
                 { new: true },
@@ -66,7 +101,7 @@ const updateProduct = (id: string, data: IProductUpdate) => {
             resolve({
                 status: 200,
                 message: "ok",
-                data: updatePost,
+                data: updatePdct,
             });
         } catch (e) {
             reject(e);
@@ -74,4 +109,36 @@ const updateProduct = (id: string, data: IProductUpdate) => {
     });
 };
 
-export { createProduct, getProduct, updateProduct };
+const deleteProduct = (id: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkProduct = await productModel.findOne({
+                _id: id,
+            });
+            if (checkProduct === null) {
+                resolve({
+                    status: 404,
+                    message: "This product doesn't exist!",
+                });
+            }
+
+            const deleteProduct = await productModel.findByIdAndDelete(id);
+
+            resolve({
+                status: 200,
+                message: "Deleted",
+                data: deleteProduct,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+export {
+    createProduct,
+    getProduct,
+    updateProduct,
+    deleteProduct,
+    searchProducts,
+};
