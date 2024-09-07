@@ -27,7 +27,7 @@ export const authenticateTokenAdmin = async (
 
             const user = await userModel.findOne({ _id: userID });
 
-            if (user?.idAdmin) {
+            if (user?.isAdmin) {
                 req.body = { ...req.body, user };
                 next();
             } else {
