@@ -1,10 +1,16 @@
-export interface IUser{
+export interface ISearchUser {
+    name?: string;
+    email?: string;
+}
+
+export interface IUser {
     name: string;
     email: string;
     password: string;
+    image?: string;
 }
 
-export interface IUserModel extends IUser{
+export interface IUserModel extends IUser {
     _id: string;
     createdAt: string;
     updatedAt: string;
@@ -15,7 +21,9 @@ export interface IUserLogin {
     password: string;
 }
 
-export interface IUserUpdate{
+export interface IUserUpdate {
     name?: string;
+    email?: string;
     image?: string;
+    isAdmin?: boolean;
 }
