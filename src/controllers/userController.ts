@@ -8,7 +8,11 @@ const searchUsersFN = async (req: Request, res: Response) => {
     try {
         const querySearch: ISearchUser = req.query;
 
-        const response = await searchUsers(querySearch.name, querySearch.email);
+        const response = await searchUsers(
+            querySearch.name,
+            querySearch.email,
+            querySearch.isAdmin,
+        );
         return res.status(200).json(response);
     } catch (error: any) {
         return res.status(500).json({

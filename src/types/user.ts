@@ -1,6 +1,7 @@
 export interface ISearchUser {
     name?: string;
     email?: string;
+    isAdmin?: boolean;
 }
 
 export interface IUser {

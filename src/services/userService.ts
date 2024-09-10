@@ -1,14 +1,15 @@
 import { userModel } from "../models/UserModel";
 
-const searchUsers = (name?: string, email?: string) => {
+const searchUsers = (name?: string, email?: string, isAdmin?: boolean) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
-                name || email
+                name || email || isAdmin
                     ? {
                           $or: [
                               { name: new RegExp(String(name)) },
                               { email: new RegExp(String(email)) },
+                              { isAdmin: isAdmin },
                           ],
                       }
                     : {};
