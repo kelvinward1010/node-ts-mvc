@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ISearchUser, IUser, IUserUpdate } from "../types/user";
-import { searchUsers } from "../services/userService";
+import { deleteUser, searchUsers } from "../services/userService";
 import { checkValidate } from "../utils/regex";
 import { createUser, getDetailUser, updateUser } from "../services/authService";
 
@@ -97,4 +97,26 @@ const updateUserFN = async (req: Request, res: Response) => {
     }
 };
 
-export { searchUsersFN, createUserFN, getUserFN, updateUserFN };
+const deleteUserFN = async (req: Request, res: Response) => {
+    try {
+        const userId: string = req.params.id;
+
+        if (!userId) {
+            return res.status(400).json({
+                status: 400,
+                message: "Bad request!",
+            });
+        }
+
+        const response = await deleteUser(userId);
+        return res.status(200).json(response);
+    } catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error",
+            error: error?.message,
+        });
+    }
+};
+
+export { searchUsersFN, createUserFN, getUserFN, updateUserFN, deleteUserFN };

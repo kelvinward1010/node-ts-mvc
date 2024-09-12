@@ -2,6 +2,7 @@ import express from "express";
 import { authenticateTokenAdmin } from "../middleware/authMiddleware";
 import {
     createUserFN,
+    deleteUserFN,
     getUserFN,
     searchUsersFN,
     updateUserFN,
@@ -12,3 +13,4 @@ routerUser.get("/detail/:id", authenticateTokenAdmin, getUserFN);
 routerUser.get("/search", authenticateTokenAdmin, searchUsersFN);
 routerUser.post("/create", authenticateTokenAdmin, createUserFN);
 routerUser.put("/:id", authenticateTokenAdmin, updateUserFN);
+routerUser.delete("/delete/:id", authenticateTokenAdmin, deleteUserFN);

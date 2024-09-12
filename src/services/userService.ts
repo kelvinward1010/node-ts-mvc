@@ -36,4 +36,30 @@ const searchUsers = (name?: string, email?: string, isAdmin?: boolean) => {
     });
 };
 
-export { searchUsers };
+const deleteUser = (id: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkUser = await userModel.findOne({
+                _id: id,
+            });
+            if (checkUser === null) {
+                resolve({
+                    status: 404,
+                    message: "This user doesn't exist!",
+                });
+            }
+
+            const dltUser = await userModel.findByIdAndDelete(id);
+
+            resolve({
+                status: 200,
+                message: "Deleted",
+                data: dltUser,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+export { searchUsers, deleteUser };
