@@ -38,7 +38,7 @@ const createProductFN = async (req: Request, res: Response) => {
             type,
         }: IProduct = req.body;
 
-        if (!name || !image || !description || !quantity || !price || !type) {
+        if (!name || !description || !quantity || !price || !type) {
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request",
