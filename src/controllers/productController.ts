@@ -101,11 +101,9 @@ const updateProductFN = async (req: Request, res: Response) => {
 
         if (
             !name ||
-            !image ||
             !description ||
             !quantity ||
             !price ||
-            !appreciation ||
             !type ||
             !productId
         ) {

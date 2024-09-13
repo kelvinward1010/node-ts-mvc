@@ -11,7 +11,7 @@ import {
 export const routerProduct = express.Router();
 
 routerProduct.get("/search", searchProductFN);
-routerProduct.get("/detail/:id", getProductFN);
+routerProduct.get("/detail/:id", authenticateTokenAdmin, getProductFN);
 routerProduct.post("/create", authenticateTokenAdmin, createProductFN);
 routerProduct.put("/update/:id", authenticateTokenAdmin, updateProductFN);
 routerProduct.delete("/delete/:id", authenticateTokenAdmin, deleteProductFN);
