@@ -104,6 +104,7 @@ const updateProductFN = async (req: Request, res: Response) => {
             !description ||
             !quantity ||
             !price ||
+            !appreciation ||
             !type ||
             !productId
         ) {
