@@ -13,6 +13,7 @@ const searchProductFN = async (req: Request, res: Response) => {
         const querySearch: IsearchProduct = req.query;
 
         const response = await searchProducts(
+            querySearch.id,
             querySearch.name,
             querySearch.type,
             querySearch.page,

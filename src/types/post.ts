@@ -1,4 +1,5 @@
 export interface IsearchPost {
+    id?: string;
     title?: string;
     topic?: string[];
     page?: number;

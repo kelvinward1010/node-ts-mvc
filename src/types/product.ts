@@ -1,4 +1,5 @@
 export interface IsearchProduct {
+    id?: string;
     name?: string;
     type?: string;
     page?: number;

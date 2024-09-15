@@ -3,6 +3,7 @@ import { userModel } from "../models/UserModel";
 const ITEMS_PER_PAGE = 10;
 
 const searchUsers = (
+    id?: string,
     name?: string,
     email?: string,
     isAdmin?: boolean,
@@ -11,9 +12,10 @@ const searchUsers = (
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
-                name || email || isAdmin
+                name || email || isAdmin || id
                     ? {
                           $or: [
+                              { _id: String(id) },
                               { name: new RegExp(String(name)) },
                               { email: new RegExp(String(email)) },
                               { isAdmin: isAdmin },

@@ -9,6 +9,7 @@ const searchUsersFN = async (req: Request, res: Response) => {
         const querySearch: ISearchUser = req.query;
 
         const response = await searchUsers(
+            querySearch.id,
             querySearch.name,
             querySearch.email,
             querySearch.isAdmin,

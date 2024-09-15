@@ -14,6 +14,7 @@ const searchPostsFN = async (req: Request, res: Response) => {
         const querySearch: IsearchPost = req.query;
 
         const response = await searchPosts(
+            querySearch.id,
             querySearch.title,
             querySearch.topic,
             querySearch.page,

@@ -3,13 +3,19 @@ import { IProduct, IProductUpdate } from "../types/product";
 
 const ITEMS_PER_PAGE = 10;
 
-const searchProducts = (name?: string, type?: string, page = 1) => {
+const searchProducts = (
+    id?: string,
+    name?: string,
+    type?: string,
+    page = 1,
+) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
-                name || type
+                name || type || id
                     ? {
                           $or: [
+                              { _id: String(id) },
                               { name: new RegExp(String(name)) },
                               { type: String(type) },
                           ],

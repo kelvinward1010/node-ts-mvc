@@ -4,6 +4,7 @@ import { IPost, IPostUpdate } from "../types/post";
 const ITEMS_PER_PAGE = 10;
 
 const searchPosts = (
+    id?: string,
     searchTitle?: string,
     searchTopic?: string[],
     page = 1,
@@ -11,9 +12,10 @@ const searchPosts = (
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
-                searchTitle || searchTopic
+                searchTitle || searchTopic || id
                     ? {
                           $or: [
+                              { _id: String(id) },
                               { title: new RegExp(String(searchTitle)) },
                               { topic: { $in: searchTopic } },
                           ],
