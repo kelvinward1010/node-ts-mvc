@@ -39,9 +39,11 @@ const searchUsers = (
             resolve({
                 status: 200,
                 message: "ok!",
-                data: search,
-                currentPage: Number(page),
-                totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
+                data: {
+                    items: search,
+                    currentPage: Number(page),
+                    totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
+                },
             });
         } catch (e) {
             reject(e);

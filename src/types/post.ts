@@ -1,6 +1,7 @@
 export interface IsearchPost {
     title?: string;
     topic?: string[];
+    page?: number;
 }
 
 export interface IPost {

@@ -1,7 +1,13 @@
 import { postModel } from "../models/PostModel";
 import { IPost, IPostUpdate } from "../types/post";
 
-const searchPosts = (searchTitle?: string, searchTopic?: string[]) => {
+const ITEMS_PER_PAGE = 10;
+
+const searchPosts = (
+    searchTitle?: string,
+    searchTopic?: string[],
+    page = 1,
+) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
@@ -14,9 +20,13 @@ const searchPosts = (searchTitle?: string, searchTopic?: string[]) => {
                       }
                     : {};
 
+            const totalPosts = await postModel.countDocuments(finalSearch);
+
             const searchPosts = await postModel
                 .find(finalSearch)
-                .sort({ createdAt: -1 });
+                .sort({ createdAt: -1 })
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
 
             if (searchPosts === null) {
                 resolve({
@@ -27,8 +37,12 @@ const searchPosts = (searchTitle?: string, searchTopic?: string[]) => {
 
             resolve({
                 status: 200,
-                message: "Successfully!",
-                data: searchPosts,
+                message: "Ok!",
+                data: {
+                    items: searchPosts,
+                    currentPage: Number(page),
+                    totalPages: Math.ceil(totalPosts / ITEMS_PER_PAGE),
+                },
             });
         } catch (e) {
             reject(e);

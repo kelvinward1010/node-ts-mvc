@@ -35,9 +35,11 @@ const searchProducts = (name?: string, type?: string, page = 1) => {
             resolve({
                 status: 200,
                 message: "Ok!",
-                data: searchPdts,
-                currentPage: Number(page),
-                totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
+                data: {
+                    items: searchPdts,
+                    currentPage: Number(page),
+                    totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
+                },
             });
         } catch (e) {
             reject(e);

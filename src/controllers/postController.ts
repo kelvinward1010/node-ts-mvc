@@ -16,6 +16,7 @@ const searchPostsFN = async (req: Request, res: Response) => {
         const response = await searchPosts(
             querySearch.title,
             querySearch.topic,
+            querySearch.page,
         );
         return res.status(200).json(response);
     } catch (error: any) {
