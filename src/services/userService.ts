@@ -1,6 +1,13 @@
 import { userModel } from "../models/UserModel";
 
-const searchUsers = (name?: string, email?: string, isAdmin?: boolean) => {
+const ITEMS_PER_PAGE = 10;
+
+const searchUsers = (
+    name?: string,
+    email?: string,
+    isAdmin?: boolean,
+    page = 1,
+) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
@@ -14,9 +21,13 @@ const searchUsers = (name?: string, email?: string, isAdmin?: boolean) => {
                       }
                     : {};
 
+            const totalProducts = await userModel.countDocuments(finalSearch);
+
             const search = await userModel
                 .find(finalSearch)
-                .sort({ createdAt: -1 });
+                .sort({ createdAt: -1 })
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
 
             if (search === null) {
                 resolve({
@@ -29,6 +40,8 @@ const searchUsers = (name?: string, email?: string, isAdmin?: boolean) => {
                 status: 200,
                 message: "ok!",
                 data: search,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
             });
         } catch (e) {
             reject(e);

@@ -1,6 +1,7 @@
 export interface IsearchProduct {
     name?: string;
     type?: string;
+    page?: number;
 }
 
 export interface IProduct {

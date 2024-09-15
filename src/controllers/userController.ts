@@ -12,6 +12,7 @@ const searchUsersFN = async (req: Request, res: Response) => {
             querySearch.name,
             querySearch.email,
             querySearch.isAdmin,
+            querySearch.page,
         );
         return res.status(200).json(response);
     } catch (error: any) {

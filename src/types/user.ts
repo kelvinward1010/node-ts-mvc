@@ -2,6 +2,7 @@ export interface ISearchUser {
     name?: string;
     email?: string;
     isAdmin?: boolean;
+    page?: number;
 }
 
 export interface IUser {

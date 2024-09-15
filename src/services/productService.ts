@@ -1,7 +1,9 @@
 import { productModel } from "../models/ProductModel";
 import { IProduct, IProductUpdate } from "../types/product";
 
-const searchProducts = (name?: string, type?: string) => {
+const ITEMS_PER_PAGE = 10;
+
+const searchProducts = (name?: string, type?: string, page = 1) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch =
@@ -14,9 +16,14 @@ const searchProducts = (name?: string, type?: string) => {
                       }
                     : {};
 
+            const totalProducts =
+                await productModel.countDocuments(finalSearch);
+
             const searchPdts = await productModel
                 .find(finalSearch)
-                .sort({ createdAt: -1 });
+                .sort({ createdAt: -1 })
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
 
             if (searchPdts === null) {
                 resolve({
@@ -27,8 +34,10 @@ const searchProducts = (name?: string, type?: string) => {
 
             resolve({
                 status: 200,
-                message: "Successfully!",
+                message: "Ok!",
                 data: searchPdts,
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalProducts / ITEMS_PER_PAGE),
             });
         } catch (e) {
             reject(e);

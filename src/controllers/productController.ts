@@ -15,6 +15,7 @@ const searchProductFN = async (req: Request, res: Response) => {
         const response = await searchProducts(
             querySearch.name,
             querySearch.type,
+            querySearch.page,
         );
         return res.status(200).json(response);
     } catch (error: any) {
