@@ -1,3 +1,11 @@
+export interface ISearchOrder {
+    id?: string;
+    status?: string;
+    name?: string;
+    phone?: string;
+    address?: string;
+}
+
 export interface IOrder {
     paymentmethod: string;
     idUser: string;
@@ -23,7 +31,13 @@ export interface IOrder {
         shipping_price: number;
         totalprice: number;
     };
+    status: string;
     completed: boolean;
     paidAt: string;
     deliveredAt: string;
+}
+
+export interface IOrderUpdate {
+    status?: string;
+    completed?: boolean;
 }

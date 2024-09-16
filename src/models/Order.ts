@@ -26,6 +26,7 @@ const orderSchema = new mongoose.Schema(
             shipping_price: { type: Number, required: true },
             totalprice: { type: Number, required: true },
         },
+        status: { type: String, required: true },
         completed: { type: Boolean, required: true },
         paidAt: { type: String },
         deliveredAt: { type: String },
