@@ -14,6 +14,8 @@ const searchOrdersFN = async (req: Request, res: Response) => {
         const response = await searchOrders(
             querySearch.id,
             querySearch.status,
+            querySearch.completed,
+            querySearch.idUser,
             querySearch.name,
             querySearch.phone,
             querySearch.address,

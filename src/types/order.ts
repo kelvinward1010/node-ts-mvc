@@ -1,6 +1,8 @@
 export interface ISearchOrder {
     id?: string;
     status?: string;
+    completed?: boolean;
+    idUser?: string;
     name?: string;
     phone?: string;
     address?: string;

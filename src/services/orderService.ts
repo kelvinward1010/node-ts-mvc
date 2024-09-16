@@ -6,6 +6,8 @@ const ITEMS_PER_PAGE = 10;
 const searchOrders = (
     id?: string,
     status?: string,
+    completed?: boolean,
+    idUser?: string,
     name?: string,
     phone?: string,
     address?: string,
@@ -15,27 +17,36 @@ const searchOrders = (
         try {
             let finalSearch = id
                 ? { $or: [{ _id: String(id) }] }
-                : name || phone || address
-                  ? {
-                        $or: [
-                            {
-                                "deliveryaddress.name": new RegExp(
-                                    String(name),
-                                ),
-                            },
-                            {
-                                "deliveryaddress.phone": new RegExp(
-                                    String(phone),
-                                ),
-                            },
-                            {
-                                "deliveryaddress.address": new RegExp(
-                                    String(address),
-                                ),
-                            },
-                        ],
-                    }
-                  : {};
+                : idUser
+                  ? { $or: [{ idUser: String(idUser) }] }
+                  : status || completed
+                    ? {
+                          $or: [
+                              { status: String(status) },
+                              { completed: Boolean(completed) },
+                          ],
+                      }
+                    : name || phone || address
+                      ? {
+                            $or: [
+                                {
+                                    "deliveryaddress.name": new RegExp(
+                                        String(name),
+                                    ),
+                                },
+                                {
+                                    "deliveryaddress.phone": new RegExp(
+                                        String(phone),
+                                    ),
+                                },
+                                {
+                                    "deliveryaddress.address": new RegExp(
+                                        String(address),
+                                    ),
+                                },
+                            ],
+                        }
+                      : {};
 
             const totalOrders = await orderModel.countDocuments(finalSearch);
 
