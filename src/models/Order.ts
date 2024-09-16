@@ -27,8 +27,8 @@ const orderSchema = new mongoose.Schema(
             totalprice: { type: Number, required: true },
         },
         completed: { type: Boolean, required: true },
-        paidAt: { type: Date },
-        deliveredAt: { type: Date },
+        paidAt: { type: String },
+        deliveredAt: { type: String },
     },
     { timestamps: true },
 );
