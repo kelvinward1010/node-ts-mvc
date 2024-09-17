@@ -9,34 +9,22 @@ const searchOrders = (
     completed?: boolean,
     idUser?: string,
     nameOrder?: string,
-    nameUser?: string,
     page = 1,
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
             let finalSearch = id
                 ? { $or: [{ _id: String(id) }] }
-                : idUser
-                  ? { $or: [{ idUser: String(idUser) }] }
-                  : status || completed || nameOrder
-                    ? {
-                          $or: [
-                              { status: String(status) },
-                              { completed: Boolean(completed) },
-                              { name: new RegExp(String(nameOrder)) },
-                          ],
-                      }
-                    : nameUser
-                      ? {
-                            $or: [
-                                {
-                                    "deliveryaddress.name": new RegExp(
-                                        String(nameUser),
-                                    ),
-                                },
-                            ],
-                        }
-                      : {};
+                : idUser || nameOrder || status || completed
+                  ? {
+                        $or: [
+                            { idUser: String(idUser) },
+                            { name: new RegExp(String(nameOrder)) },
+                            { status: String(status) },
+                            { completed: completed },
+                        ],
+                    }
+                  : {};
 
             const totalOrders = await orderModel.countDocuments(finalSearch);
 

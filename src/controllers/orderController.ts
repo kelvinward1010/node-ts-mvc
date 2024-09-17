@@ -17,7 +17,6 @@ const searchOrdersFN = async (req: Request, res: Response) => {
             querySearch.completed,
             querySearch.idUser,
             querySearch.nameOrder,
-            querySearch.nameUser,
         );
         return res.status(200).json(response);
     } catch (error: any) {

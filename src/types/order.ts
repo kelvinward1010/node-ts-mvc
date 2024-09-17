@@ -4,7 +4,6 @@ export interface ISearchOrder {
     completed?: boolean;
     idUser?: string;
     nameOrder?: string;
-    nameUser?: string;
 }
 
 export interface IOrder {
