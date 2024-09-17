@@ -16,7 +16,7 @@ export interface IOrder {
         phone: string;
         address: string;
     };
-    products?: [
+    products: [
         {
             key: any;
             _id: string;

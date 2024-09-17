@@ -42,7 +42,7 @@ const createOrderFN = async (req: Request, res: Response) => {
             deliveredAt,
         }: IOrder = req.body;
 
-        if (!paymentmethod || !idUser || !deliveryaddress || !yourinvoice) {
+        if (!paymentmethod || !idUser || products.length > 0) {
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request",
