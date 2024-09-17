@@ -112,41 +112,17 @@ const updateOrder = (id: string, data: IOrderUpdate) => {
                 });
             }
 
-            if (data.status) {
-                const updateorder = await orderModel.findByIdAndUpdate(
-                    id,
-                    {
-                        $set: {
-                            status: data.status,
-                        },
-                    },
-                    { new: true },
-                );
+            const updateorder = await orderModel.findByIdAndUpdate(
+                id,
+                { $set: data },
+                { new: true },
+            );
 
-                resolve({
-                    status: 200,
-                    message: "ok",
-                    data: updateorder,
-                });
-            }
-
-            if (data.completed) {
-                const updateorder = await orderModel.findByIdAndUpdate(
-                    id,
-                    {
-                        $set: {
-                            completed: data.completed,
-                        },
-                    },
-                    { new: true },
-                );
-
-                resolve({
-                    status: 200,
-                    message: "ok",
-                    data: updateorder,
-                });
-            }
+            resolve({
+                status: 200,
+                message: "ok",
+                data: updateorder,
+            });
         } catch (e) {
             reject(e);
         }
