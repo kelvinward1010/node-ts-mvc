@@ -29,7 +29,6 @@ const orderSchema = new mongoose.Schema(
         },
         status: { type: String, required: true },
         completed: { type: Boolean, required: true },
-        paidAt: { type: String },
         deliveredAt: { type: String },
     },
     { timestamps: true },
