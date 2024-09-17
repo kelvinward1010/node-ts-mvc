@@ -3,6 +3,7 @@ import { IOrder, IOrderUpdate, ISearchOrder } from "../types/order";
 import {
     createOrder,
     deleteOrder,
+    getOrder,
     searchOrders,
     updateOrder,
 } from "../services/orderService";
@@ -18,6 +19,28 @@ const searchOrdersFN = async (req: Request, res: Response) => {
             querySearch.idUser,
             querySearch.nameOrder,
         );
+        return res.status(200).json(response);
+    } catch (error: any) {
+        return res.status(500).json({
+            status: 500,
+            message: "Internal server error",
+            error: error?.message,
+        });
+    }
+};
+
+const getOrderFN = async (req: Request, res: Response) => {
+    try {
+        const orderId: string = req.params.id;
+
+        if (!orderId) {
+            return res.status(400).json({
+                status: 400,
+                message: "Bad request!",
+            });
+        }
+
+        const response = await getOrder(orderId);
         return res.status(200).json(response);
     } catch (error: any) {
         return res.status(500).json({
@@ -119,4 +142,10 @@ const deleteOrderFN = async (req: Request, res: Response) => {
     }
 };
 
-export { createOrderFN, searchOrdersFN, deleteOrderFN, updateOrderFN };
+export {
+    createOrderFN,
+    searchOrdersFN,
+    deleteOrderFN,
+    updateOrderFN,
+    getOrderFN,
+};

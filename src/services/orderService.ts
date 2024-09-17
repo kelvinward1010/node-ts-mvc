@@ -56,6 +56,30 @@ const searchOrders = (
     });
 };
 
+const getOrder = (id: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkOrder = await orderModel.findOne({
+                _id: id,
+            });
+            if (checkOrder === null) {
+                resolve({
+                    status: 404,
+                    message: "This order doesn't exist!",
+                });
+            }
+
+            resolve({
+                status: 200,
+                message: "ok",
+                data: checkOrder,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 const createOrder = (orderInfo: IOrder) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -155,4 +179,4 @@ const deleteOrder = (id: string) => {
     });
 };
 
-export { createOrder, searchOrders, deleteOrder, updateOrder };
+export { createOrder, searchOrders, deleteOrder, updateOrder, getOrder };
