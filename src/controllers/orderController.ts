@@ -97,7 +97,17 @@ const createOrderFN = async (req: Request, res: Response) => {
 const updateOrderFN = async (req: Request, res: Response) => {
     try {
         const productId: string = req.params.id;
-        const { status, completed }: IOrderUpdate = req.body;
+        const {
+            name,
+            paymentmethod,
+            idUser,
+            deliveryaddress,
+            products,
+            yourinvoice,
+            status,
+            completed,
+            deliveredAt,
+        }: IOrderUpdate = req.body;
 
         if (!status && !completed) {
             return res.status(400).json({
@@ -107,8 +117,15 @@ const updateOrderFN = async (req: Request, res: Response) => {
         }
 
         const response = await updateOrder(productId, {
+            name,
+            paymentmethod,
+            idUser,
+            deliveryaddress,
+            products,
+            yourinvoice,
             status,
             completed,
+            deliveredAt,
         });
         return res.status(200).json(response);
     } catch (error: any) {
