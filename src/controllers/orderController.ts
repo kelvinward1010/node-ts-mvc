@@ -16,9 +16,8 @@ const searchOrdersFN = async (req: Request, res: Response) => {
             querySearch.status,
             querySearch.completed,
             querySearch.idUser,
-            querySearch.name,
-            querySearch.phone,
-            querySearch.address,
+            querySearch.nameOrder,
+            querySearch.nameUser,
         );
         return res.status(200).json(response);
     } catch (error: any) {
@@ -33,6 +32,7 @@ const searchOrdersFN = async (req: Request, res: Response) => {
 const createOrderFN = async (req: Request, res: Response) => {
     try {
         const {
+            name,
             paymentmethod,
             idUser,
             deliveryaddress,
@@ -40,7 +40,6 @@ const createOrderFN = async (req: Request, res: Response) => {
             yourinvoice,
             status,
             completed,
-            paidAt,
             deliveredAt,
         }: IOrder = req.body;
 
@@ -52,6 +51,7 @@ const createOrderFN = async (req: Request, res: Response) => {
         }
 
         const createorder = await createOrder({
+            name,
             paymentmethod,
             idUser,
             deliveryaddress,
@@ -59,7 +59,6 @@ const createOrderFN = async (req: Request, res: Response) => {
             yourinvoice,
             status,
             completed,
-            paidAt,
             deliveredAt,
         });
 

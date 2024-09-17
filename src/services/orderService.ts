@@ -8,9 +8,8 @@ const searchOrders = (
     status?: string,
     completed?: boolean,
     idUser?: string,
-    name?: string,
-    phone?: string,
-    address?: string,
+    nameOrder?: string,
+    nameUser?: string,
     page = 1,
 ) => {
     return new Promise(async (resolve, reject) => {
@@ -19,29 +18,20 @@ const searchOrders = (
                 ? { $or: [{ _id: String(id) }] }
                 : idUser
                   ? { $or: [{ idUser: String(idUser) }] }
-                  : status || completed
+                  : status || completed || nameOrder
                     ? {
                           $or: [
                               { status: String(status) },
                               { completed: Boolean(completed) },
+                              { name: new RegExp(String(nameOrder)) },
                           ],
                       }
-                    : name || phone || address
+                    : nameUser
                       ? {
                             $or: [
                                 {
                                     "deliveryaddress.name": new RegExp(
-                                        String(name),
-                                    ),
-                                },
-                                {
-                                    "deliveryaddress.phone": new RegExp(
-                                        String(phone),
-                                    ),
-                                },
-                                {
-                                    "deliveryaddress.address": new RegExp(
-                                        String(address),
+                                        String(nameUser),
                                     ),
                                 },
                             ],

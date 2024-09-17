@@ -3,29 +3,38 @@ export interface ISearchOrder {
     status?: string;
     completed?: boolean;
     idUser?: string;
-    name?: string;
-    phone?: string;
-    address?: string;
+    nameOrder?: string;
+    nameUser?: string;
 }
 
 export interface IOrder {
+    name: string;
     paymentmethod: string;
     idUser: string;
     deliveryaddress: {
         name: string;
+        email: string;
         phone: string;
         address: string;
     };
     products?: [
         {
+            key: any;
             _id: string;
-            name: string;
-            image: string;
-            description: string;
-            quantity: number;
-            price: number;
-            star: number;
-            type: string;
+            name?: string;
+            image?: string;
+            description?: string;
+            quantity?: number;
+            price?: number;
+            type?: string;
+            appreciation?: [
+                {
+                    star: number;
+                    idUser: string;
+                },
+            ];
+            createdAt: string;
+            updatedAt: string;
         },
     ];
     yourinvoice: {
@@ -35,7 +44,6 @@ export interface IOrder {
     };
     status: string;
     completed: boolean;
-    paidAt: string;
     deliveredAt: string;
 }
 
