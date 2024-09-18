@@ -15,7 +15,7 @@ const searchPosts = (
                 searchTitle || searchTopic || id
                     ? {
                           $or: [
-                              { _id: String(id) },
+                              { _id: id },
                               { title: new RegExp(String(searchTitle)) },
                               { topic: { $in: searchTopic } },
                           ],

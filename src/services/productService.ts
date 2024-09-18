@@ -11,16 +11,16 @@ const searchProducts = (
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let finalSearch =
-                name || type || id
-                    ? {
-                          $or: [
-                              { _id: String(id) },
-                              { name: new RegExp(String(name)) },
-                              { type: String(type) },
-                          ],
-                      }
-                    : {};
+            let finalSearch = id
+                ? { $or: [{ _id: id }] }
+                : name || type
+                  ? {
+                        $or: [
+                            { name: new RegExp(String(name)) },
+                            { type: type },
+                        ],
+                    }
+                  : {};
 
             const totalProducts =
                 await productModel.countDocuments(finalSearch);

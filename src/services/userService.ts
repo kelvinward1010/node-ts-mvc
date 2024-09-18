@@ -11,17 +11,17 @@ const searchUsers = (
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let finalSearch =
-                name || email || isAdmin || id
-                    ? {
-                          $or: [
-                              { _id: String(id) },
-                              { name: new RegExp(String(name)) },
-                              { email: new RegExp(String(email)) },
-                              { isAdmin: isAdmin },
-                          ],
-                      }
-                    : {};
+            let finalSearch = id
+                ? { $or: [{ _id: id }] }
+                : name || email || isAdmin
+                  ? {
+                        $or: [
+                            { name: new RegExp(String(name)) },
+                            { email: new RegExp(String(email)) },
+                            { isAdmin: isAdmin },
+                        ],
+                    }
+                  : {};
 
             const totalProducts = await userModel.countDocuments(finalSearch);
 
